@@ -1,0 +1,5 @@
+{
+  "projName": "What's the name of your project?",
+  "projType": "What kind of project would you like to build?",
+  "projType.frontend": "frontend [react + typescript + webpack]"
+}
