@@ -4,7 +4,6 @@
   "description": "Quickly build and config a project with command line.",
   "repository": "https://github.com/StephanieTM/proj-builder.git",
   "author": "Stephanie.Gao <tm1997@163.com>",
-  "private": true,
   "license": "MIT",
   "main": "dist",
   "scripts": {},
