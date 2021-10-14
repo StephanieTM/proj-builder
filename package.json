@@ -1,0 +1,23 @@
+{
+  "name": "@stephanietm/proj-builder",
+  "version": "0.1.0",
+  "description": "Quickly build and config a project with command line.",
+  "repository": "https://github.com/StephanieTM/proj-builder.git",
+  "author": "Stephanie.Gao <tm1997@163.com>",
+  "private": true,
+  "license": "MIT",
+  "main": "dist",
+  "scripts": {},
+  "bin": {
+    "build-project": "bin/proj-builder.js"
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.2.0",
+    "inquirer": "^8.2.0"
+  }
+}
