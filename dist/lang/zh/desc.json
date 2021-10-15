@@ -1,5 +1,5 @@
 {
   "projName": "输入项目名称",
   "projType": "选择项目类型",
-  "projType.frontend": "前端项目 [react + typescript + webpack]"
+  "projType.frontend": "前端单页应用项目 [react + typescript + webpack]"
 }

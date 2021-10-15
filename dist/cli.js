@@ -3,11 +3,12 @@
 // const INFO_COLOR = '#32d7e8';
 
 const inquirer = require('inquirer');
+const _ = require('lodash');
 // const chalk = require('chalk');
 const questions = require('./questions');
 
 let language = 'en';
-let curQuest = 'null';
+let curQuest = 'start';
 
 const options = {};
 
@@ -17,20 +18,29 @@ function q(index) {
 
 function saveOption(answer) {
   if (answer) {
-    Object.keys(answer).forEach((key) => {
-      options[key] = answer[key];
-    });
+    _.merge(options, answer);
   }
 }
 
 function nextQuest(curAnswer) {
   saveOption(curAnswer);
-  if (curQuest === 'null') {
+  if (curQuest === 'start') {
     curQuest = '0';
   } else {
-    curQuest = `${Number(curQuest) + 1}`;
+    const path = curQuest.split('-').concat('');
+    let key = '';
+    while (key !== 'end' && !questions[key]) {
+      path.pop();
+      key = path.length ? (
+        path
+          .slice(0, -1)
+          .concat(`${Number(path[path.length-1])+1}`)
+          .join('-')
+      ) : 'end';
+    }
+    curQuest = key;
   }
-  if (curQuest !== '2') {
+  if (curQuest !== 'end') {
     return new Promise((resolve) => {
       resolve(inquirer.prompt(q(curQuest)));
     }).then(nextQuest);

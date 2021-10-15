@@ -25,8 +25,34 @@ module.exports = (language = 'en') => {
       name: 'projType',
       message: l('projType'),
       choices: [
-        { name: l('projType.frontend'), value: 'frontend' }
+        { name: l('projType.frontend'), value: 'frontend' },
+        { name: l('projType.node'), value: 'node' },
       ],
+      jumpTo: (answer) => {
+        switch (answer.projType) {
+          case 'frontend':
+            return '1-0-0';
+          case 'node':
+            return '1-1-0';
+          default:
+        }
+      },
+    },
+    '1-0-0': {
+      type: 'input',
+      name: 'port',
+      message: l('port'),
+      default: '8000',
+    },
+    '1-0-1': {
+      type: 'list',
+      name: 'customTheme',
+      message: l('theme'),
+    },
+    '1-1-0': {
+      type: 'confirm',
+      name: 'goodbye',
+      message: l('goodbye'),
     },
   };
 };
