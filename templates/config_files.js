@@ -1,28 +1,26 @@
 module.exports = (options) => {
   return [{
     fileName: '.browserslistrc',
-    content: `
-> 1% # Browser usage over 1%
+    content:
+`> 1% # Browser usage over 1%
 Last 4 versions # Or last two versions
 ie >= 10
 iOS >= 7
 Android >= 4
-
-    `,
+`,
   }, {
     fileName: '.commitlintrc.js',
-    content: `
-module.exports = {
+    content:
+`module.exports = {
   extends: [
     '@commitlint/config-conventional'
   ],
 };
-
-    `,
+`,
   }, {
     fileName: '.editorconfig',
-    content: `
-# @see: https://editorconfig.org/
+    content:
+`# @see: https://editorconfig.org/
 root = true
 
 [*]
@@ -32,19 +30,17 @@ charset = utf-8
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
-
-    `,
+`,
   }, {
     fileName: '.eslintignore',
-    content: `
-node_modules/
+    content:
+`node_modules/
 dist/
-
-    `,
+`,
   }, {
     fileName: '.eslintrc.js',
-    content: `
-module.exports = {
+    content:
+`module.exports = {
   parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 6,
@@ -106,24 +102,22 @@ module.exports = {
     },
   ],
 };
-
-    `,
+`,
   }, {
     fileName: '.gitignore',
-    content: `
-node_modules/
+    content:
+`node_modules/
 dist/
 dist_github_page/
 
 .vscode
 .eslintcache
 .DS_Store
-
-    `,
+`,
   }, {
     fileName: '.prettierrc.js',
-    content: `
-module.exports = {
+    content:
+`module.exports = {
   semi: true,
   eslintIntegration: true,
   trailingComma: 'all',
@@ -137,40 +131,36 @@ module.exports = {
     tabSize: 2,
   },
 };
-
-    `,
+`,
   }, {
     fileName: '.stylelintignore',
-    content: `
-dist/
+    content:
+`dist/
 node_modules/
 
 .vscode
 .eslintcache
 .DS_Store
-
-    `,
+`,
   }, {
     fileName: '.stylelintrc.js',
-    content: `
-module.exports = {
+    content:
+`module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-recess-order',
   ],
 };
-
-    `,
+`,
   }, {
     fileName: '.yarnrc',
-    content: `
-registry "https://registry.npm.taobao.org/"
-
-    `,
+    content:
+`registry "https://registry.npm.taobao.org/"
+`,
   }, {
     fileName: 'babel.config.js',
-    content: `
-module.exports = (api) => {
+    content:
+`module.exports = (api) => {
   const isProd = api.env('production');
 
   const presets = [
@@ -198,12 +188,11 @@ module.exports = (api) => {
     },
   };
 };
-    
-    `,
+`,
   }, {
     fileName: 'dev-server.js',
-    content: `
-const webpack = require('webpack');
+    content:
+`const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.dev');
 const env = require('./env');
@@ -234,20 +223,18 @@ const server = new webpackDevServer(compiler, options);
 server.listen(options.port, options.host, () => {
   console.log(\`dev server listening on port \${options.port}\`);
 });
-
-    `,
+`,
   }, {
     fileName: 'env.js',
-    content: `
-module.exports = {
+    content:
+`module.exports = {
   PORT: ${options.port},
 };
-
-    `,
+`,
   }, {
     fileName: 'server.js',
-    content: `
-const path = require('path');
+    content:
+`const path = require('path');
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const env = require('./env');
@@ -268,12 +255,11 @@ app.get('/*', (req, res) => {
 app.listen(env.PORT || 3000, function() {
   console.log(\`app listening on port \${env.PORT || 3000}!\\n\`);
 });
-
-    `,
+`,
   }, {
     fileName: 'tsconfig.json',
-    content: `
-{
+    content:
+`{
   "compilerOptions": {
     "target": "es5",
     "module": "ESNext",
@@ -318,7 +304,6 @@ app.listen(env.PORT || 3000, function() {
     "./src"
   ]
 }
-
-    `,
+`,
   }];
 };

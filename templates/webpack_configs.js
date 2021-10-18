@@ -1,8 +1,8 @@
 module.exports = (options) => {
   return [{
     fileName: 'webpack.common.js',
-    content: `
-const webpack = require('webpack');
+    content:
+`const webpack = require('webpack');
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -126,12 +126,11 @@ module.exports = {
     },
   },
 };
-
-    `,
+`,
   }, {
     fileName: 'webpack.dev.js',
-    content: `
-const { merge } = require('webpack-merge');
+    content:
+`const { merge } = require('webpack-merge');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -179,12 +178,11 @@ module.exports = merge(config, {
     }),
   ],
 });
-
-    `,
+`,
   }, {
     fileName: 'webpack.github-page.js',
-    content: `
-const { merge } = require('webpack-merge');
+    content:
+`const { merge } = require('webpack-merge');
 const path = require('path');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -225,12 +223,11 @@ module.exports = merge(config, {
     minimizer: [new TerserPlugin()],
   },
 });
-
-    `,
+`,
   }, {
     fileName: 'webpack.prod.js',
-    content: `
-const { merge } = require('webpack-merge');
+    content:
+`const { merge } = require('webpack-merge');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -262,7 +259,6 @@ module.exports = merge(config, {
     minimizer: [new TerserPlugin()],
   },
 });
-
-    `,
+`,
   }];
 };
