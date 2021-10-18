@@ -1,5 +1,9 @@
 {
   "projName": "What's the name of your project?",
+  "projDesc": "Describe your project:",
+  "repo": "Repository of the project:",
+  "author": "Author of the project:",
+  "email": "Email of the author:",
   "projType": "What kind of project would you like to build?",
   "projType.frontend": "Frontend SPA Project [react + typescript + webpack]",
   "projType.node": "Node.JS Project [nodejs]",

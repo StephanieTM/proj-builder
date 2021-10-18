@@ -1,10 +1,7 @@
 "use strict";
 
-// const INFO_COLOR = '#32d7e8';
-
 const inquirer = require('inquirer');
 const _ = require('lodash');
-// const chalk = require('chalk');
 const questions = require('./questions');
 
 let language = 'en';
@@ -69,5 +66,6 @@ inquirer
   })
   .then(nextQuest)
   .then(() => {
+    options.root = process.cwd();
     console.log('options :>> ', options);
   });

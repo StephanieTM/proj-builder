@@ -1,5 +1,9 @@
 {
   "projName": "输入项目名称：",
+  "projDesc": "输入项目描述：",
+  "repo": "输入项目仓库地址",
+  "author": "输入作者名称",
+  "email": "输入作者邮箱",
   "projType": "选择项目类型：",
   "projType.frontend": "前端单页应用项目 [react + typescript + webpack]",
   "projType.node": "Node.JS 项目 [nodejs]",
