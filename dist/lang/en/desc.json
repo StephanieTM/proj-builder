@@ -1,5 +1,17 @@
 {
   "projName": "What's the name of your project?",
   "projType": "What kind of project would you like to build?",
-  "projType.frontend": "Frontend SPA Project [react + typescript + webpack]"
+  "projType.frontend": "Frontend SPA Project [react + typescript + webpack]",
+  "projType.node": "Node.JS Project [nodejs]",
+  "port": "Which port do you want to serve the project?",
+  "theme": "Choose a theme:",
+  "custom": "customize",
+  "customTheme": "Customize theme:",
+  "needGithubPages": "Do you need Github Pages configured for your project?",
+  "projCategory": "What kind of Github repository do you use to host your project?",
+  "projCategory.homepageProj": "Github homepage repo (https://your-user-name.github.io/)",
+  "projCategory.commonProj": "Github common repo (https://your-user-name.github.io/your-repo-name/)",
+  "sourceBranch": "On which git branch does the project source code lie?",
+  "pagesBranch": "On which git branch does the Github pages bundle code lie?",
+  "goodbye": "End of questions, goodbye!"
 }

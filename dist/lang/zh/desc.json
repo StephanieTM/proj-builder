@@ -1,5 +1,17 @@
 {
-  "projName": "输入项目名称",
-  "projType": "选择项目类型",
-  "projType.frontend": "前端单页应用项目 [react + typescript + webpack]"
+  "projName": "输入项目名称：",
+  "projType": "选择项目类型：",
+  "projType.frontend": "前端单页应用项目 [react + typescript + webpack]",
+  "projType.node": "Node.JS 项目 [nodejs]",
+  "port": "输入端口号：",
+  "theme": "选择主题色：",
+  "custom": "自定义",
+  "customTheme": "自定义主题色：",
+  "needGithubPages": "是否需要支持GitHub Pages：",
+  "projCategory": "Github仓库类型",
+  "projCategory.homepageProj": "Github个人首页仓库 (https://your-user-name.github.io/)",
+  "projCategory.commonProj": "Github普通仓库 (https://your-user-name.github.io/your-repo-name/)",
+  "sourceBranch": "项目源代码所在分支：",
+  "pagesBranch": "项目Github Pages打包文件所在分支：",
+  "goodbye": "结束"
 }
