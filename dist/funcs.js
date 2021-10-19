@@ -1,23 +1,12 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
-const getTemplates = require('../templates');
+const getTemplates = require('../sources/templates');
 
-const filesToMakeExecutable = [
-  './.husky/commit-msg',
-  './.husky/pre-commit',
+const assetsDirsToCopy = [
+  { from: '../sources/assets', to: 'assets' },
 ];
 
 module.exports = (options) => {
-  function chmod() {
-    filesToMakeExecutable.forEach(fileName => {
-      try {
-        fs.chmodSync(path.resolve(options.root, fileName), 0o755);
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  }
-
   function generateFiles() {
     const templates = getTemplates(options);
     templates.forEach(template => {
@@ -27,8 +16,16 @@ module.exports = (options) => {
     });
   }
 
+  function copyAssetsDirs() {
+    assetsDirsToCopy.forEach(assets => {
+      const destDir = path.resolve(options.root, assets.to);
+      fs.mkdirSync(destDir, { recursive: true });
+      fs.copySync(path.resolve(__dirname, assets.from), destDir);
+    });
+  }
+
   return {
     generateFiles,
-    chmod,
+    copyAssetsDirs,
   };
 };
