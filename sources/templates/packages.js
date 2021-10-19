@@ -1,25 +1,27 @@
 module.exports = (options) => {
+  const { projName, projDesc, projRepo, author, needGithubPages } = options;
+
   return [{
     fileName: 'package.json',
     content:
 `{
-  "name": "${options.projName}",
+  "name": "${projName}",
   "version": "1.0.0",
-  "description": "${options.projDesc}",
+  "description": "${projDesc}",
   "scripts": {
     "postinstall": "husky install",
     "test": "echo \\"Error: no test specified\\" && exit 1",
     "build-dev": "webpack --config webpack.dev.js",
-    "build-github-page": "NODE_ENV=production webpack --mode production --config webpack.github-page.js",
-    "build": "NODE_ENV=production webpack --mode production --config webpack.prod.js",
+    ${needGithubPages ? `"build-github-page": "NODE_ENV=production webpack --mode production --config webpack.github-page.js",
+    ` : ''}"build": "NODE_ENV=production webpack --mode production --config webpack.prod.js",
     "watch": "webpack --watch --config webpack.dev.js",
     "dev": "node dev-server.js",
     "lint": "eslint ./app ./src --ext js --ext jsx --ext ts --ext tsx --ignore-pattern .eslintignore",
     "lintStyle": "stylelint ./app/**/*/*.less ./src/**/*/*.less --ignore-pattern .stylelintignore",
     "server": "node server.js"
   },
-  "repository": "${options.projRepo}",
-  "author": "${options.author.name}${options.author.email ? ` <${options.author.email}>` : ''}",
+  "repository": "${projRepo}",
+  "author": "${author.name}${author.email ? ` <${author.email}>` : ''}",
   "license": "ISC",
   "private": true,
   "devDependencies": {

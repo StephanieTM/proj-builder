@@ -1,4 +1,7 @@
 module.exports = (options) => {
+  const { projName, needGithubPages, projCategory } = options;
+  const [primary, secondary] = options.customTheme.split(',');
+
   return [{
     fileName: 'webpack.common.js',
     content:
@@ -55,8 +58,8 @@ module.exports = {
             options: {
               lessOptions: {
                 modifyVars: {
-                  '@primary': '#2f855a',
-                  '@secondary': '#68d391',
+                  '@primary': '${primary}',
+                  '@secondary': '${secondary}',
                   '@font-color': '#1a202c',
                   '@pc-max-container-width': '800px',
                   '@pc-container-padding': '40px',
@@ -179,7 +182,7 @@ module.exports = merge(config, {
   ],
 });
 `,
-  }, {
+  }, needGithubPages ? {
     fileName: 'webpack.github-page.js',
     content:
 `const { merge } = require('webpack-merge');
@@ -194,7 +197,7 @@ module.exports = merge(config, {
   mode: 'production',
   output: {
     path: path.resolve(__dirname, 'dist_github_page'),
-    publicPath: '/fe-starter/',
+    publicPath: '${needGithubPages && projCategory === 'commonProj' ? `/${projName}/` : '/'}',
     filename: 'assets/scripts/[name].[chunkhash].js',
     chunkFilename: 'assets/scripts/[name].[chunkhash].js',
   },
@@ -224,7 +227,7 @@ module.exports = merge(config, {
   },
 });
 `,
-  }, {
+  } : null, {
     fileName: 'webpack.prod.js',
     content:
 `const { merge } = require('webpack-merge');
@@ -260,5 +263,5 @@ module.exports = merge(config, {
   },
 });
 `,
-  }];
+  }].filter(Boolean);
 };
