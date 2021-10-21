@@ -67,6 +67,5 @@ inquirer
   .then(nextQuest)
   .then(() => {
     options.root = process.cwd();
-    console.log('options :>> ', options);
     require('./main')(options)();
   });
