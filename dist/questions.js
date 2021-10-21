@@ -1,5 +1,5 @@
 const getDesc = require('./lang/utils/getDesc');
-const chalk = require('chalk');
+const { themeOptionName } = require('./utils');
 
 module.exports = (language = 'en') => {
   function l(key) {
@@ -20,6 +20,15 @@ module.exports = (language = 'en') => {
       type: 'input',
       name: 'projName',
       message: l('projName'),
+      validate: (input) => {
+        if (['.', '..'].indexOf(input) > -1) {
+          return l('projName.validate.reserved');
+        }
+        if (!/^([A-Z]|[a-z]|[0-9]|-|_|\.)+$/.test(input)) {
+          return l('projName.validate.invalid');
+        }
+        return true;
+      },
     },
     '1': {
       type: 'input',
@@ -40,6 +49,12 @@ module.exports = (language = 'en') => {
       type: 'input',
       name: 'author.email',
       message: l('email'),
+      validate: (input) => {
+        if (/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g.test(input)) {
+          return true;
+        }
+        return l('email.validate.invalid');
+      },
     },
     '5': {
       type: 'list',
@@ -47,14 +62,11 @@ module.exports = (language = 'en') => {
       message: l('projType'),
       choices: [
         { name: l('projType.frontend'), value: 'frontend' },
-        { name: l('projType.node'), value: 'node' },
       ],
       jumpTo: (answer) => {
         switch (answer.projType) {
           case 'frontend':
             return '5-0-0';
-          case 'node':
-            return '5-1-0';
           default:
             return '';
         }
@@ -65,15 +77,31 @@ module.exports = (language = 'en') => {
       name: 'port',
       message: l('port'),
       default: '8000',
+      validate: (input) => {
+        if (/^[1-9][0-9]{3,4}$/.test(input)) {
+          if (Number(input) < 65536) {
+            return true;
+          }
+        }
+        return l('port.validate.invalid');
+      },
     },
     '5-0-1': {
       type: 'list',
       name: 'customTheme',
       message: l('theme'),
       choices: [
-        { name: `${chalk.white.bgHex('#2f855a')('#2f855a')},${chalk.white.bgHex('#68d391')('#68d391')}`, value: '#2f855a,#68d391' },
+        { name: themeOptionName('#2f855a,#68d391'), value: '#2f855a,#68d391' },
+        { name: themeOptionName('#ff7d37,#ffc11f'), value: '#ff7d37,#ffc11f' },
+        { name: themeOptionName('#194da5,#3c95db'), value: '#194da5,#3c95db' },
         { name: l('custom'), value: 'CUSTOMIZE' },
       ],
+      validate: (input) => {
+        if (/^CUSTOMIZE$|^#([0-9]|[a-f]){3}(([0-9]|[a-f]){3})?,#([0-9]|[a-f]){3}(([0-9]|[a-f]){3})?$/i.test(input)) {
+          return true;
+        }
+        return l('customTheme.validate.invalid');
+      },
       jumpTo: (answer) => {
         switch (answer.customTheme) {
           case 'CUSTOMIZE':
@@ -87,6 +115,12 @@ module.exports = (language = 'en') => {
       type: 'input',
       name: 'customTheme',
       message: l('customTheme'),
+      validate: (input) => {
+        if (/^#([0-9]|[a-f]){3}(([0-9]|[a-f]){3})?,#([0-9]|[a-f]){3}(([0-9]|[a-f]){3})?$/i.test(input)) {
+          return true;
+        }
+        return l('customTheme.validate.invalid');
+      },
     },
     '5-0-2': {
       type: 'confirm',
@@ -120,11 +154,6 @@ module.exports = (language = 'en') => {
       name: 'pagesBranch',
       message: l('pagesBranch'),
       default: 'github-pages',
-    },
-    '5-1-0': {
-      type: 'confirm',
-      name: 'goodbye',
-      message: l('goodbye'),
     },
   };
 };

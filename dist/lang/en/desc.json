@@ -6,7 +6,6 @@
   "email": "Email of the author:",
   "projType": "What kind of project would you like to build?",
   "projType.frontend": "Frontend SPA Project [react + typescript + webpack]",
-  "projType.node": "Node.JS Project [nodejs]",
   "port": "Which port do you want to serve the project?",
   "theme": "Choose a theme:",
   "custom": "customize",
@@ -17,5 +16,9 @@
   "projCategory.commonProj": "Github common repo (https://your-user-name.github.io/your-repo-name/)",
   "sourceBranch": "On which git branch does the project source code lie?",
   "pagesBranch": "On which git branch does the Github pages bundle code lie?",
-  "goodbye": "End of questions, goodbye!"
+  "projName.validate.reserved": "This name is reserved, try something else.",
+  "projName.validate.invalid": "Invalid name.",
+  "email.validate.invalid": "Invalid email.",
+  "port.validate.invalid": "Invalid port.",
+  "customTheme.validate.invalid": "Invalid theme. Example: #2f855a,#68d391 ."
 }

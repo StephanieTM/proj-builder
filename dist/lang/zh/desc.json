@@ -6,7 +6,6 @@
   "email": "输入作者邮箱",
   "projType": "选择项目类型：",
   "projType.frontend": "前端单页应用项目 [react + typescript + webpack]",
-  "projType.node": "Node.JS 项目 [nodejs]",
   "port": "输入端口号：",
   "theme": "选择主题色：",
   "custom": "自定义",
@@ -17,5 +16,9 @@
   "projCategory.commonProj": "Github普通仓库 (https://your-user-name.github.io/your-repo-name/)",
   "sourceBranch": "项目源代码所在分支：",
   "pagesBranch": "项目Github Pages打包文件所在分支：",
-  "goodbye": "结束"
+  "projName.validate.reserved": "该名称是保留字，请重新输入",
+  "projName.validate.invalid": "无效的名称",
+  "email.validate.invalid": "无效的邮箱",
+  "port.validate.invalid": "无效的端口号",
+  "customTheme.validate.invalid": "无效的自定义主题色，正确示例：#2f855a,#68d391"
 }
