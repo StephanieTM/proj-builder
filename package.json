@@ -1,6 +1,6 @@
 {
   "name": "@stephanietm/proj-builder",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Quickly build and config a project with command line.",
   "repository": {
     "type": "git",
