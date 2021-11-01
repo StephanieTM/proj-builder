@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const getTemplates = require('../sources/templates');
+const getTemplates = require('../sources/templates/index');
 const { info, error, OKFLAG, ERRFLAG, divider } = require('../utils/log');
 
 const assetsDirsToCopy = [
