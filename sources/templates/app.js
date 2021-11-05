@@ -81,42 +81,6 @@ export default function Body(props: IBodyProps): JSX.Element {
 }
 `,
   }, {
-    fileName: 'app/layout/global-store.ts',
-    content:
-`import { useMemo, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
-import { createContainer } from 'unstated-next';
-import { IRouteConfig, routes } from '../routers/routes';
-import { getApplication } from './utils';
-import { IValue, IApplication } from './interface';
-
-const appList = getApplication(routes);
-
-function useGlobalStore(): IValue {
-  const isMobile = useMediaQuery({ query: '(max-width: 540px)' });
-  const apps = useMemo(() => {
-    return appList;
-  }, []);
-  const [currentApp, setCurrentApp] = useState<IApplication|Record<string, never>>(apps[0] || {});
-  const [appDrawerVisible, setAppDrawerVisible] = useState<boolean>(false);
-  const menus = useMemo<IRouteConfig[]>(() => {
-    return ((currentApp as IApplication).menus || []);
-  }, [currentApp]);
-
-  return {
-    apps,
-    menus,
-    currentApp,
-    setCurrentApp,
-    appDrawerVisible,
-    setAppDrawerVisible,
-    isMobile,
-  };
-}
-
-export default createContainer<IValue>(useGlobalStore);
-`,
-  }, {
     fileName: 'app/layout/Header.tsx',
     content:
 `import React from 'react';
@@ -430,6 +394,60 @@ export function getMenuKey({ children, title, link }: IRouteConfig, appCode = ''
 }
 `,
   }, {
+    fileName: 'app/models/global.ts',
+    content:
+`import { createModel } from '@rematch/core';
+import { IApplication } from 'app/layout/interface';
+import { getApplication } from 'app/layout/utils';
+import { IRouteConfig, routes } from 'app/routers/routes';
+import { RootModel } from './index';
+
+interface GlobalState {
+  apps: IApplication[];
+  currentApp: IApplication|Record<string, never>;
+  menus: IRouteConfig[];
+  appDrawerVisible: boolean;
+  isMobile: boolean;
+};
+
+const appList = getApplication(routes);
+
+export const global = createModel<RootModel>()({
+  state: {
+    apps: appList,
+    currentApp: {},
+    menus: [],
+    appDrawerVisible: false,
+    isMobile: false,
+  } as GlobalState,
+  reducers: {
+    setCurrentApp(state, currentApp: GlobalState['currentApp']) {
+      return { ...state, currentApp, menus: currentApp.menus || [] };
+    },
+    setAppDrawerVisible(state, appDrawerVisible: GlobalState['appDrawerVisible']) {
+      return { ...state, appDrawerVisible };
+    },
+    setIsMobile(state, isMobile: GlobalState['isMobile']) {
+      return { ...state, isMobile };
+    },
+  },
+});
+`,
+  }, {
+    fileName: 'app/models/index.ts',
+    content:
+`import { Models } from '@rematch/core';
+import { global } from './global';
+
+export interface RootModel extends Models<RootModel> {
+  global: typeof global;
+}
+
+export const models: RootModel = {
+  global,
+};
+`,
+  }, {
     fileName: 'app/routers/routes.ts',
     content:
 `import { ComponentType } from 'react';
@@ -488,10 +506,11 @@ export const theme = extendTheme({
     fileName: 'app/utils/hooks.ts',
     content:
 `import { useCallback } from 'react';
-import GlobalStore from 'app/layout/global-store';
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/store';
 
 export function useClassName(): (className: string) => string {
-  const { isMobile } = GlobalStore.useContainer();
+  const { isMobile } = useSelector((state: RootState) => state.global);
 
   return useCallback((className: string): string => {
     return \`\${className} \${className}-\${isMobile ? 'mobile' : 'pc'}\`;
@@ -524,40 +543,71 @@ body {
   }, {
     fileName: 'app/index.tsx',
     content:
-`import React from 'react';
+`import React, { useEffect } from 'react';
 import ReactDom from 'react-dom';
 import { hot } from 'react-hot-loader/root';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { Provider, useDispatch } from 'react-redux';
 import { ChakraProvider } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import { theme } from './theme';
 import { configAxios } from './config/axios-config';
+import { Dispatch, store } from './store';
 import AppLayout from './layout';
-import GlobalStore from './layout/global-store';
 import './index.less';
 
 configAxios();
 dayjs.locale('zh-cn');
 
 function App(): JSX.Element {
+  const isMobile = useMediaQuery({ query: '(max-width: 540px)' });
+  const dispatch = useDispatch<Dispatch>();
+
+  useEffect(() => {
+    dispatch.global.setIsMobile(isMobile);
+  }, [dispatch.global, isMobile]);
+
   return (
-    <GlobalStore.Provider>
+    <Provider store={store}>
       <ChakraProvider theme={theme}>
         <Router${needGithubPages && projCategory === 'commonProj' ? ` basename="/${projName}"` : ``}>
           <AppLayout />
         </Router>
       </ChakraProvider>
-    </GlobalStore.Provider>
+    </Provider>
   );
 }
 
-const HotApp = hot(App);
+function WrappedApp(): JSX.Element {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
+
+const HotApp = hot(WrappedApp);
 
 ReactDom.render(
   <HotApp />,
   document.getElementById('app')
 );
+`,
+  }, {
+    fileName: 'app/store.ts',
+    content:
+`import { init, RematchDispatch, RematchRootState } from '@rematch/core';
+import { models, RootModel } from './models';
+
+export const store = init({
+  models,
+});
+
+export type Store = typeof store;
+export type Dispatch = RematchDispatch<RootModel>;
+export type RootState = RematchRootState<RootModel>;
 `,
   }];
 };
